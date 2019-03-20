@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesla for Tizen", "Tesla for Tizen\Tesla for Tizen.csproj", "{B254B570-B8D1-418E-9F72-B30139D4A098}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B254B570-B8D1-418E-9F72-B30139D4A098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B254B570-B8D1-418E-9F72-B30139D4A098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B254B570-B8D1-418E-9F72-B30139D4A098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B254B570-B8D1-418E-9F72-B30139D4A098}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D36E02A-C95B-45E9-9D7C-734A05BDD44A}
+	EndGlobalSection
+EndGlobal
