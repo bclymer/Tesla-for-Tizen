@@ -13,9 +13,11 @@
     <DebugType>None</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="res\developer.json" />
     <None Remove="res\teslaApiClient.json" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="res\developer.json" />
     <EmbeddedResource Include="res\teslaApiClient.json" />
   </ItemGroup>
 
