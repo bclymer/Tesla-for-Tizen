@@ -11,6 +11,7 @@ namespace TeslaTizen.Pages
     {
         public VehicleNavigation(TeslaService teslaService)
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             // Need a way to determine if this is from cache or not to force a refresh
             var cachedVehicles = teslaService.GetVehicles();
             ShowVehicles(cachedVehicles);
@@ -30,9 +31,7 @@ namespace TeslaTizen.Pages
             if (pages.Count == 1)
             {
                 // If there is only 1 vehicle, go straight into it
-                var profiles = new ProfilesListPage(vehicles.First());
-                NavigationPage.SetHasNavigationBar(profiles, false);
-                pages.First().Navigation.PushAsync(profiles);
+                pages.First().Navigation.PushAsync(new ProfilesListPage(vehicles.First()));
             }
         }
 

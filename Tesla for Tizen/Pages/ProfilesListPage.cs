@@ -12,8 +12,9 @@ namespace TeslaTizen.Pages
 
         public ProfilesListPage(TeslaVehicle vehicle, IProfileService profileService)
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             var profiles = profileService.GetProfiles();
-            var listView = new ListView
+            var listView = new CircleListView
             {
                 ItemsSource = profiles.Select(p => p.Name),
             };
@@ -26,6 +27,12 @@ namespace TeslaTizen.Pages
             {
                 Children =
                 {
+                    new Label()
+                    {
+                        Text = "Profiles",
+                        FontSize = 12,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                    },
                     listView,
                 }
             };

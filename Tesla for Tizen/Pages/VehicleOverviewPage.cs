@@ -25,9 +25,7 @@ namespace TeslaTizen.Pages
                     {
                         Command = new Command(() =>
                         {
-                            var profiles = new ProfilesListPage(vehicle);
-                            NavigationPage.SetHasNavigationBar(profiles, false);
-                            Navigation.PushAsync(profiles);
+                            Navigation.PushAsync(new ProfilesListPage(vehicle));
                         }),
                     }
                 }

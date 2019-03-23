@@ -15,9 +15,7 @@ namespace Tesla_for_Tizen
             }
             else
             {
-                var nav = new VehicleNavigation(teslaService);
-                NavigationPage.SetHasNavigationBar(nav, false);
-                MainPage = new NavigationPage(nav);
+                MainPage = new NavigationPage(new VehicleNavigation(teslaService));
             }
         }
 
