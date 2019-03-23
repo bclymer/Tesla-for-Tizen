@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesla for Tizen", "Tesla for Tizen\Tesla for Tizen.csproj", "{B254B570-B8D1-418E-9F72-B30139D4A098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeslaTizen", "Tesla for Tizen\TeslaTizen.csproj", "{B254B570-B8D1-418E-9F72-B30139D4A098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

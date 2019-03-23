@@ -1,31 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using TeslaTizen.Pages;
 using Xamarin.Forms;
-using Tizen.Wearable.CircularUI.Forms;
 
 namespace Tesla_for_Tizen
 {
     public class App : Application
     {
+        private readonly TeslaService teslaService = new TeslaService();
+
         public App()
         {
-            // The root page of your application
-            MainPage = new CirclePage
+            if (teslaService.RequiresLogin())
             {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
+                MainPage = new LoginPage(teslaService);
+            }
+            else
+            {
+                var nav = new VehicleNavigation(teslaService);
+                NavigationPage.SetHasNavigationBar(nav, false);
+                MainPage = new NavigationPage(nav);
+            }
         }
 
         protected override void OnStart()

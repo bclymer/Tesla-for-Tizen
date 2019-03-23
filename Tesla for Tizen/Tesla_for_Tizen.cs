@@ -1,5 +1,3 @@
-using System;
-
 namespace Tesla_for_Tizen
 {
     class Program : global::Xamarin.Forms.Platform.Tizen.FormsApplication

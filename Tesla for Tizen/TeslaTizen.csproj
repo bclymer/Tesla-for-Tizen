@@ -12,13 +12,19 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>None</DebugType>
   </PropertyGroup>
-
   <ItemGroup>
-    <Folder Include="lib\" />
-    <Folder Include="res\" />
+    <None Remove="res\teslaApiClient.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\teslaApiClient.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="lib\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tesla.NET" Version="0.6.2" />
     <PackageReference Include="Tizen.NET" Version="5.0.0.14562">
       <ExcludeAssets>Runtime</ExcludeAssets>
     </PackageReference>

@@ -8,5 +8,8 @@
         <splash-screens />
     </ui-application>
     <shortcut-list />
+    <privileges>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+    </privileges>
     <provides-appdefined-privileges />
 </manifest>
