@@ -1,9 +1,0 @@
-{
-  "accessToken": "<accessToken>",
-  "tokenType": "<tokenType>",
-  "expiresIn": 0,
-  "createdAt": 0,
-  "refreshToken": "<refreshToken>",
-  "email": "<email>",
-  "password": "<password>"
-}
