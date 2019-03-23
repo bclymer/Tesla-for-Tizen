@@ -37,7 +37,7 @@ namespace Tesla_for_Tizen
             {
                 new TeslaVehicle
                 {
-                    Name = "Sonic",
+                    Name = "Appa",
                     Id = 12345,
                 },
                 new TeslaVehicle

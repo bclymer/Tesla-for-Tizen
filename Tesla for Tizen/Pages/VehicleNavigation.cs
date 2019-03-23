@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tesla_for_Tizen;
 using TeslaTizen.Models;
 using Tizen.Wearable.CircularUI.Forms;
@@ -7,7 +8,7 @@ using Xamarin.Forms;
 
 namespace TeslaTizen.Pages
 {
-    public class VehicleNavigation: TabbedPage
+    public class VehicleNavigation: IndexPage
     {
         public VehicleNavigation(TeslaService teslaService)
         {
@@ -23,7 +24,7 @@ namespace TeslaTizen.Pages
             Children.Add(new LoadingPage());
         }
 
-        private void ShowVehicles(List<TeslaVehicle> vehicles)
+        private async void ShowVehicles(List<TeslaVehicle> vehicles)
         {
             Children.Clear();
             var pages = vehicles.Select(v => new VehicleOverviewPage(v)).ToList();
@@ -31,7 +32,7 @@ namespace TeslaTizen.Pages
             if (pages.Count == 1)
             {
                 // If there is only 1 vehicle, go straight into it
-                pages.First().Navigation.PushAsync(new ProfilesListPage(vehicles.First()));
+                await pages.First().Navigation.PushAsync(new ProfilesListPage(vehicles.First()));
             }
         }
 

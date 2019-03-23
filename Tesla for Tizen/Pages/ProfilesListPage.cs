@@ -23,16 +23,19 @@ namespace TeslaTizen.Pages
                 ((ListView)sender).SelectedItem = null; // de-select the row
             };
 
+            ActionButton = new ActionButtonItem
+            {
+                Text = "Create",
+                Command = new Command(async () =>
+                {
+                    await DisplayAlert("Tapped", "Extra Item", "OK");
+                })
+            };
+
             Content = new StackLayout
             {
                 Children =
                 {
-                    new Label()
-                    {
-                        Text = "Profiles",
-                        FontSize = 12,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                    },
                     listView,
                 }
             };

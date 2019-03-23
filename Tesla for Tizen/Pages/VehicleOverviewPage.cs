@@ -23,9 +23,9 @@ namespace TeslaTizen.Pages
                 {
                     new TapGestureRecognizer
                     {
-                        Command = new Command(() =>
+                        Command = new Command(async () =>
                         {
-                            Navigation.PushAsync(new ProfilesListPage(vehicle));
+                            await Navigation.PushAsync(new ProfilesListPage(vehicle));
                         }),
                     }
                 }
