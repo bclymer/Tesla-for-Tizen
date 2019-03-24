@@ -15,6 +15,7 @@ namespace TeslaTizen.Pages
                 {
                     new Label
                     {
+                        FontSize = 20,
                         HorizontalTextAlignment = TextAlignment.Center,
                         Text = vehicle.Name,
                     },

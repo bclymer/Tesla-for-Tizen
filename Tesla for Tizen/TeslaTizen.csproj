@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>tizen50</TargetFramework>
     <AssemblyName>Tesla_for_Tizen</AssemblyName>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
