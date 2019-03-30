@@ -16,14 +16,43 @@ namespace TeslaTizen.Pages
         public EditProfilePage(Profile profile)
         {
             NavigationPage.SetHasNavigationBar(this, false);
+            
+            var listView = new CircleListView
+            {
+                ItemsSource = profile.Actions,
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    Label nameLabel = new Label
+                    {
+                        HeightRequest = 120,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                    };
+                    nameLabel.SetBinding(Label.TextProperty, "Name");
+                    return new ViewCell
+                    {
+                        View = new StackLayout
+                        {
+                            Children =
+                            {
+                                nameLabel,
+                            }
+                        }
+                    };
+                }),
+            };
+            listView.ItemTapped += async (sender, e) =>
+            {
+                var binder = (VehicleAction)e.Item;
+                await DisplayAlert("Tapped", $"You tapped {binder.Name}", "Cancel");
+            };
+            // TODO tapping cell should have popup to delete it.
+
             Content = new StackLayout
             {
                 Children =
                 {
-                    new CircleListView
-                    {
-                        ItemsSource = profile.Actions.Select(a => a.Type.GetDescription()),
-                    }
+                    listView,
                 }
             };
 

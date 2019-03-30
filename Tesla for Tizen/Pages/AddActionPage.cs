@@ -17,11 +17,31 @@ namespace TeslaTizen.Pages
 
             var listView = new CircleListView
             {
-                ItemsSource = VehicleActionUtils.GetVisibleActions().Select(a => a.GetDescription())
+                ItemsSource = VehicleActionUtils.GetVisibleActions().Select(a => new VehicleActionBinder(a)),
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    Label nameLabel = new Label
+                    {
+                        HeightRequest = 120,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                    };
+                    nameLabel.SetBinding(Label.TextProperty, "Name");
+                    return new ViewCell
+                    {
+                        View = new StackLayout
+                        {
+                            Children =
+                            {
+                                nameLabel,
+                            }
+                        }
+                    };
+                }),
             };
             listView.ItemTapped += async (sender, e) => {
-                //profile.Actions.Add();
-                await Navigation.PopAsync();
+                var binder = (VehicleActionBinder)e.Item;
+                await binder.Action.CustomizeOrReturn(profile, Navigation);
             };
 
             Content = new StackLayout
@@ -31,6 +51,17 @@ namespace TeslaTizen.Pages
                     listView
                 }
             };
+        }
+
+        private class VehicleActionBinder
+        {
+            public VehicleActionType Action { get; }
+            public string Name { get { return Action.GetDescription(); } }
+
+            public VehicleActionBinder(VehicleActionType action)
+            {
+                Action = action;
+            }
         }
     }
 }
