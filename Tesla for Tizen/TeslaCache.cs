@@ -55,14 +55,13 @@ namespace Tesla_for_Tizen
             {
                 var json = JsonConvert.SerializeObject(data);
                 Application.Current.Properties[name] = json;
-                Debug.WriteLine($"Storing cached data for {name}");
+                LogUtil.Debug($"Storing cached data for {name}");
                 //var alias = GetAlias(name);
                 //DataManager.Save(alias, Encoding.UTF8.GetBytes(json), new Policy(name, true));
             }
             catch (Exception ex)
             {
-                // TODO errors
-                Console.WriteLine("RIP - " + ex.Message);
+                LogUtil.Error(ex.Message);
             }
         }
 
@@ -74,12 +73,12 @@ namespace Tesla_for_Tizen
                 {
                     var json = Application.Current.Properties[name] as string;
                     var data = JsonConvert.DeserializeObject<T>(json);
-                    Debug.WriteLine($"Found cached data for {name}");
+                    LogUtil.Debug($"Found cached data for {name}");
                     return data;
                 }
                 else
                 {
-                    Debug.WriteLine($"Missed cached data for {name}");
+                    LogUtil.Debug($"Missed cached data for {name}");
                     return default(T);
                 }
                 //var alias = GetAlias(name);

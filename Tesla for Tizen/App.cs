@@ -1,4 +1,6 @@
-﻿using TeslaTizen.Pages;
+﻿using System.Diagnostics;
+using TeslaTizen.Pages;
+using TeslaTizen.Utils;
 using Xamarin.Forms;
 
 namespace Tesla_for_Tizen
@@ -9,6 +11,8 @@ namespace Tesla_for_Tizen
 
         public App()
         {
+            LogUtil.Debug($"FreshInstall={Properties.ContainsKey("FreshInstall")}");
+            Properties["FreshInstall"] = true;
             if (teslaService.RequiresLogin())
             {
                 MainPage = new LoginPage(teslaService);

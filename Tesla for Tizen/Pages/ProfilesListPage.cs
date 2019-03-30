@@ -28,7 +28,7 @@ namespace TeslaTizen.Pages
                 Text = "Create",
                 Command = new Command(async () =>
                 {
-                    await DisplayAlert("Tapped", "Extra Item", "OK");
+                    await Navigation.PushAsync(new EditProfilePage());
                 })
             };
 
