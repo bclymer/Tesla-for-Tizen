@@ -16,11 +16,32 @@ namespace TeslaTizen.Pages
             var profiles = profileService.GetProfiles();
             var listView = new CircleListView
             {
-                ItemsSource = profiles.Select(p => p.Name),
+                Header = vehicle.Name,
+                ItemsSource = profiles.Select(p => new ProfileBinder(p)),
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    Label nameLabel = new Label
+                    {
+                        HeightRequest = 120,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                    };
+                    nameLabel.SetBinding(Label.TextProperty, "Name");
+                    return new ViewCell
+                    {
+                        View = new StackLayout
+                        {
+                            Children =
+                            {
+                                nameLabel,
+                            }
+                        }
+                    };
+                }),
             };
             listView.ItemTapped += async (sender, e) => {
-                await DisplayAlert("Tapped", e.Item + " row was tapped", "OK");
-                ((ListView)sender).SelectedItem = null; // de-select the row
+                var binder = (ProfileBinder)e.Item;
+                await Navigation.PushAsync(new ProfileActionPage(binder.Profile, profileService));
             };
 
             ActionButton = new ActionButtonItem
@@ -39,6 +60,17 @@ namespace TeslaTizen.Pages
                     listView,
                 }
             };
+        }
+
+        private class ProfileBinder
+        {
+            public Profile Profile { get; }
+            public string Name { get { return Profile.Name; } }
+
+            public ProfileBinder(Profile profile)
+            {
+                Profile = profile;
+            }
         }
     }
 }

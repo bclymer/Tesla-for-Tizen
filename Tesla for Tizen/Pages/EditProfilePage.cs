@@ -19,6 +19,7 @@ namespace TeslaTizen.Pages
             
             var listView = new CircleListView
             {
+                Header = profile.Name,
                 ItemsSource = profile.Actions,
                 ItemTemplate = new DataTemplate(() =>
                 {

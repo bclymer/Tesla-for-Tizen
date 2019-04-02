@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tesla_for_Tizen;
 using TeslaTizen.Pages;
+using TeslaTizen.Pages.ActionCustomization;
 using Xamarin.Forms;
 
 namespace TeslaTizen.Models
@@ -12,7 +13,7 @@ namespace TeslaTizen.Models
     {
         public string Name { get { return Type.GetDescription(); } }
         public VehicleActionType Type { get; set; }
-        public Dictionary<string, string> Params { get; set; }
+        public Dictionary<string, object> Params { get; set; }
     }
 
     public enum VehicleActionType: int
@@ -117,55 +118,17 @@ namespace TeslaTizen.Models
                     await navigation.PopAsync();
                     break;
                 case VehicleActionType.ClimateSetTemps:
+                    await navigation.PushAsync(new ConfigureClimateSetTemps(profile, action));
+                    break;
                 case VehicleActionType.ClimateHeatedSeat:
                 case VehicleActionType.ClimateHeatedSteeringWheel:
                 case VehicleActionType.ChargingSetLimit:
                 case VehicleActionType.ControlsRearTrunk:
                 case VehicleActionType.ControlsSunRoof:
                 case VehicleActionType.SpeedLimitSet:
-                    await navigation.PushAsync(new ConfigureActionPage(profile, action));
+                    await navigation.PushAsync(new ConfigureActionBasePage(profile, action));
                     break;
             }
-        }
-
-        public static Dictionary<string,string> CustomizableParams(this VehicleActionType action)
-        {
-            switch (action)
-            {
-                case VehicleActionType.ClimateACStart:
-                case VehicleActionType.ClimateACStop:
-                case VehicleActionType.ChargingStart:
-                case VehicleActionType.ChargingStop:
-                case VehicleActionType.ChargingOpenPort:
-                case VehicleActionType.ChargingClosePort:
-                case VehicleActionType.ControlsDoorsLock:
-                case VehicleActionType.ControlsDoorsUnlock:
-                case VehicleActionType.ControlsFlashLights:
-                case VehicleActionType.ControlsHonkHorn:
-                case VehicleActionType.ControlsFrontTrunk:
-                case VehicleActionType.RemoteStartDrive:
-                case VehicleActionType.SpeedLimitActivate:
-                case VehicleActionType.SpeedLimitClearPin:
-                case VehicleActionType.SpeedLimitDeactivate:
-                case VehicleActionType.ValetModeResetPin:
-                case VehicleActionType.ValetModeSet:
-                    return null;
-                case VehicleActionType.ClimateSetTemps:
-                    return new Dictionary<string, string>
-                    {
-                        { "driver_temp", "string" },
-                        { "passenger_temp", "string" },
-                    };
-                case VehicleActionType.ClimateHeatedSeat:
-                case VehicleActionType.ClimateHeatedSteeringWheel:
-                case VehicleActionType.ChargingSetLimit:
-                case VehicleActionType.ControlsRearTrunk:
-                case VehicleActionType.ControlsSunRoof:
-                case VehicleActionType.SpeedLimitSet:
-                    
-                    break;
-            }
-            return null;
         }
 
         public static Task Execute(this VehicleAction action, TeslaAPIWrapper teslaApi)

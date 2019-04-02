@@ -23,5 +23,10 @@ namespace TeslaTizen.Services
                 },
             };
         }
+
+        public void DeleteProfile(Profile profile)
+        {
+
+        }
     }
 }
