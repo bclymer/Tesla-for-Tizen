@@ -1,8 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System;
+using System.Linq;
 using TeslaTizen.Models;
 using TeslaTizen.Services;
 using Tizen.Wearable.CircularUI.Forms;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
+using TeslaTizen.Utils;
+using System.Threading.Tasks;
 
 namespace TeslaTizen.Pages
 {
@@ -13,11 +18,9 @@ namespace TeslaTizen.Pages
         public ProfilesListPage(TeslaVehicle vehicle, IProfileService profileService)
         {
             NavigationPage.SetHasNavigationBar(this, false);
-            var profiles = profileService.GetProfiles();
             var listView = new CircleListView
             {
                 Header = vehicle.Name,
-                ItemsSource = profiles.Select(p => new ProfileBinder(p)),
                 ItemTemplate = new DataTemplate(() =>
                 {
                     Label nameLabel = new Label
@@ -60,6 +63,18 @@ namespace TeslaTizen.Pages
                     listView,
                 }
             };
+
+            Setup(listView, profileService);
+        }
+
+        private async Task Setup(ListView listView, IProfileService profileService)
+        {
+            var profiles = await profileService.GetProfilesAsync();
+            // TODO need to dispose of this eventually.
+            var disposable = profiles.Subscribe(updatedList => {
+                LogUtil.Verbose("New list count = " + updatedList.Count);
+                listView.ItemsSource = updatedList.Select(p => new ProfileBinder(p));
+            });
         }
 
         private class ProfileBinder

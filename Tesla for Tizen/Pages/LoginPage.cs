@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Tesla_for_Tizen;
+using TeslaTizen.Services;
 using TeslaTizen.Utils;
 using Tizen.Wearable.CircularUI.Forms;
 using Xamarin.Forms;

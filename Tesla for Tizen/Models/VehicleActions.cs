@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tesla_for_Tizen;
+using TeslaTizen.Data;
 using TeslaTizen.Pages;
 using TeslaTizen.Pages.ActionCustomization;
 using Xamarin.Forms;

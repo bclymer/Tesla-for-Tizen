@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TeslaTizen.Models;
 
 namespace TeslaTizen.Services
 {
     public interface IProfileService
     {
-        List<Profile> GetProfiles();
-        void DeleteProfile(Profile profile);
+        Task<IObservable<List<Profile>>> GetProfilesAsync();
+        Task DeleteProfileAsync(Profile profile);
+        Task UpsertProfileAsync(Profile profile);
     }
 }

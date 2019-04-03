@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Tesla_for_Tizen.Models;
 using TeslaTizen.Models;
 
-namespace Tesla_for_Tizen
+namespace TeslaTizen.Data
 {
     public interface ITeslaCache
     {

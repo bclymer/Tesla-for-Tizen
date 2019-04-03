@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.bclymer.Tesla_for_Tizen" version="1.0.0" api-version="4" xmlns="http://tizen.org/ns/packages">
     <profile name="wearable" />
-    <ui-application appid="com.bclymer.Tesla_for_Tizen" exec="Tesla_for_Tizen.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
-        <label>Tesla_for_Tizen</label>
+    <ui-application appid="com.bclymer.TeslaTizen" exec="Tesla_for_Tizen.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
+        <label>Tesla for Tizen</label>
         <icon>Tesla_for_Tizen.png</icon>
         <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
         <splash-screens />

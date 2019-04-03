@@ -1,8 +1,8 @@
 ﻿using System;
 using Tesla.NET.Models;
-using Tesla_for_Tizen.Utils;
+using TeslaTizen.Utils;
 
-namespace Tesla_for_Tizen.Models
+namespace TeslaTizen.Models
 {
     public class TeslaAuthentication
     {

@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
+using TeslaTizen.Data;
 using TeslaTizen.Pages;
+using TeslaTizen.Services;
 using TeslaTizen.Utils;
 using Xamarin.Forms;
 
-namespace Tesla_for_Tizen
+namespace TeslaTizen
 {
     public class App : Application
     {
@@ -11,8 +13,8 @@ namespace Tesla_for_Tizen
 
         public App()
         {
-            LogUtil.Debug($"FreshInstall={Properties.ContainsKey("FreshInstall")}");
-            Properties["FreshInstall"] = true;
+            CacheFactory.CreateCache().Init();
+            LogUtil.Info($"IsFreshInstall={CacheFactory.CreateCache().IsFreshInstall()}");
             if (teslaService.RequiresLogin())
             {
                 MainPage = new LoginPage(teslaService);
@@ -30,7 +32,6 @@ namespace Tesla_for_Tizen
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
         }
 
         protected override void OnResume()

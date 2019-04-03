@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
-using Tesla_for_Tizen;
 using TeslaTizen.Models;
 
 namespace TeslaTizen.Utils

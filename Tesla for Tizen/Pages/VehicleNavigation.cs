@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Tesla_for_Tizen;
 using TeslaTizen.Models;
+using TeslaTizen.Services;
 using Tizen.Wearable.CircularUI.Forms;
 using Xamarin.Forms;
 

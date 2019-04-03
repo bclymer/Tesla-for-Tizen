@@ -4,11 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Tesla.NET;
-using Tesla_for_Tizen.Models;
 using TeslaTizen.Models;
 using TeslaTizen.Utils;
 
-namespace Tesla_for_Tizen
+namespace TeslaTizen.Data
 {
     public class TeslaAPIWrapper: ITeslaAPIWrapper
     {

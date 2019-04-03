@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tesla_for_Tizen.Utils
+namespace TeslaTizen.Utils
 {
     static class EpochConversion
     {

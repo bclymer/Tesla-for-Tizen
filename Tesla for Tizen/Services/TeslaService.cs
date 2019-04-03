@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using TeslaTizen.Data;
 using TeslaTizen.Models;
 
-namespace Tesla_for_Tizen
+namespace TeslaTizen.Services
 {
     public class TeslaService
     {

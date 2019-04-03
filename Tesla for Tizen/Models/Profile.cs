@@ -1,17 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace TeslaTizen.Models
 {
     public class Profile
     {
-        public string Name { get; set; } = "New Profile";
-        public ObservableCollection<VehicleAction> Actions { get; set; } = new ObservableCollection<VehicleAction>
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public List<VehicleAction> Actions { get; set; }
+
+        public static Profile Create()
         {
-            new VehicleAction
+            return new Profile
             {
-                Type = VehicleActionType.WakeUp,
-            }
-        };
+                Id = Guid.NewGuid().ToString(),
+                Name = "New Profile",
+                Actions = new List<VehicleAction>
+                {
+                    new VehicleAction
+                    {
+                        Type = VehicleActionType.WakeUp,
+                    }
+                },
+            };
+        }
     }
 }

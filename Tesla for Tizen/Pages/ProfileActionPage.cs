@@ -23,14 +23,16 @@ namespace TeslaTizen.Pages
                 switch (e.Item)
                 {
                     case "Run":
+                        // TODO
                         // push execute action page which shows progress.
                         break;
                     case "Edit":
                         await Navigation.PushAsync(new EditProfilePage(profile));
                         break;
                     case "Delete":
-                        // Confirm delete
-                        //profileService.DeleteProfile(profile);
+                        // TODO Confirm delete
+                        await profileService.DeleteProfileAsync(profile);
+                        await Navigation.PopAsync();
                         break;
                     default:
                         break;
