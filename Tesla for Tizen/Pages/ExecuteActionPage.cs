@@ -15,7 +15,7 @@ namespace TeslaTizen.Pages
 
         public ExecuteActionPage(Profile profile, TeslaVehicle vehicle, ITeslaAPIWrapper teslaAPIWrapper)
         {
-            ExecuteAction(profile, vehicle, teslaAPIWrapper);
+            ExecuteAction(profile, vehicle, teslaAPIWrapper).Wait();
         }
 
         public async Task ExecuteAction(Profile profile, TeslaVehicle vehicle, ITeslaAPIWrapper teslaAPIWrapper)

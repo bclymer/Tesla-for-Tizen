@@ -26,8 +26,6 @@ namespace TeslaTizen.Pages
                 switch (e.Item)
                 {
                     case "Run":
-                        // TODO
-                        // push execute action page which shows progress.
                         await Navigation.PushAsync(new ExecuteActionPage(profile, teslaVehicle));
                         break;
                     case "Edit":
