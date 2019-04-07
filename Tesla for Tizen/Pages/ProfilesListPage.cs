@@ -13,14 +13,14 @@ namespace TeslaTizen.Pages
 {
     public class ProfilesListPage: CirclePage
     {
-        public ProfilesListPage(TeslaVehicle vehicle) : this(vehicle, new ProfilesService()) { }
+        private IDisposable Disposable;
 
         public ProfilesListPage(TeslaVehicle vehicle, IProfileService profileService)
         {
             NavigationPage.SetHasNavigationBar(this, false);
             var listView = new CircleListView
             {
-                Header = vehicle.Name,
+                Header = UIUtil.CreateHeaderLabel(vehicle.Name),
                 ItemTemplate = new DataTemplate(() =>
                 {
                     Label nameLabel = new Label
@@ -44,7 +44,7 @@ namespace TeslaTizen.Pages
             };
             listView.ItemTapped += async (sender, e) => {
                 var binder = (ProfileBinder)e.Item;
-                await Navigation.PushAsync(new ProfileActionPage(binder.Profile, profileService));
+                await Navigation.PushAsync(new ProfileActionPage(binder.Profile, vehicle, profileService));
             };
 
             ActionButton = new ActionButtonItem
@@ -52,27 +52,20 @@ namespace TeslaTizen.Pages
                 Text = "Create",
                 Command = new Command(async () =>
                 {
-                    await Navigation.PushAsync(new EditProfilePage());
+                    await Navigation.PushAsync(new EditProfilePage(profileService));
                 })
             };
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    listView,
-                }
-            };
+            Content = listView;
 
             Setup(listView, profileService);
         }
 
         private async Task Setup(ListView listView, IProfileService profileService)
         {
-            var profiles = await profileService.GetProfilesAsync();
             // TODO need to dispose of this eventually.
-            var disposable = profiles.Subscribe(updatedList => {
-                LogUtil.Verbose("New list count = " + updatedList.Count);
+            (await profileService.GetProfilesAsync()).Subscribe(updatedList => {
+                LogUtil.Debug("New list count = " + updatedList.Count);
                 listView.ItemsSource = updatedList.Select(p => new ProfileBinder(p));
             });
         }

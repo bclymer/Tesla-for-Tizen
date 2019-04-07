@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeslaTizen.Models;
 using TeslaTizen.Services;
+using TeslaTizen.Utils;
 using Tizen.Wearable.CircularUI.Forms;
 using Xamarin.Forms;
 
@@ -15,9 +16,7 @@ namespace TeslaTizen.Pages
         private readonly IProfileService ProfileService;
         private readonly Profile Profile;
 
-        public EditProfilePage() : this(Profile.Create(), new ProfilesService()) { }
-
-        public EditProfilePage(Profile profile) : this(profile, new ProfilesService()) { }
+        public EditProfilePage(IProfileService profileService) : this(Profile.Create(), profileService) { }
 
         public EditProfilePage(Profile profile, IProfileService profileService)
         {
@@ -28,7 +27,8 @@ namespace TeslaTizen.Pages
             
             var listView = new CircleListView
             {
-                Header = profile.Name,
+                Header = UIUtil.CreateHeaderLabel(profile.Name),
+                // TODO this is not auto-updating
                 ItemsSource = profile.Actions,
                 ItemTemplate = new DataTemplate(() =>
                 {
@@ -54,17 +54,11 @@ namespace TeslaTizen.Pages
             listView.ItemTapped += async (sender, e) =>
             {
                 var binder = (VehicleAction)e.Item;
-                await DisplayAlert("Tapped", $"You tapped {binder.Name}", "Cancel");
+                await binder.Type.CustomizeOrReturn(profile, binder, Navigation);
             };
             // TODO tapping cell should have popup to delete it.
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    listView,
-                }
-            };
+            Content = listView;
 
             ActionButton = new ActionButtonItem
             {

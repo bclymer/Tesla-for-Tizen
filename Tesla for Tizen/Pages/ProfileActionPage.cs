@@ -5,17 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using TeslaTizen.Models;
 using TeslaTizen.Services;
+using TeslaTizen.Utils;
 using Tizen.Wearable.CircularUI.Forms;
+using Xamarin.Forms;
 
 namespace TeslaTizen.Pages
 {
     public class ProfileActionPage: CirclePage
     {
-        public ProfileActionPage(Profile profile, IProfileService profileService)
+        public ProfileActionPage(Profile profile, TeslaVehicle teslaVehicle, IProfileService profileService)
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             var listView = new CircleListView
             {
-                Header = profile.Name,
+                Header = UIUtil.CreateHeaderLabel(profile.Name),
                 ItemsSource = new List<string> { "Run", "Edit", "Delete" },
             };
             listView.ItemTapped += async (sender, e) =>
@@ -25,9 +28,12 @@ namespace TeslaTizen.Pages
                     case "Run":
                         // TODO
                         // push execute action page which shows progress.
+                        await Navigation.PushAsync(new ExecuteActionPage(profile, teslaVehicle));
                         break;
                     case "Edit":
-                        await Navigation.PushAsync(new EditProfilePage(profile));
+                        await Navigation.PushAsync(new EditProfilePage(profile, profileService));
+                        // Remove this page. After editing the action this list should be gone.
+                        Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
                         break;
                     case "Delete":
                         // TODO Confirm delete

@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using TeslaTizen.Data;
 using TeslaTizen.Pages;
 using TeslaTizen.Services;
@@ -10,6 +13,7 @@ namespace TeslaTizen
     public class App : Application
     {
         private readonly TeslaService teslaService = new TeslaService();
+        private readonly IProfileService profileService = ProfileService.Instance;
 
         public App()
         {
@@ -21,7 +25,7 @@ namespace TeslaTizen
             }
             else
             {
-                MainPage = new NavigationPage(new VehicleNavigation(teslaService));
+                MainPage = new NavigationPage(new VehicleNavigation(teslaService, profileService));
             }
         }
 

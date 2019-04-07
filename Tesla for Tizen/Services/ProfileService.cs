@@ -7,20 +7,23 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Linq;
 using System.Threading.Tasks;
+using TeslaTizen.Utils;
 
 namespace TeslaTizen.Services
 {
-    public class ProfilesService: IProfileService
+    public class ProfileService: IProfileService
     {
         private const string ProfilesKey = "Profiles";
+
+        public static readonly ProfileService Instance = new ProfileService();
 
         private readonly ICache Cache;
         private BehaviorSubject<List<Profile>> ProfilesSubject;
         private List<Profile> ProfilesCache;
 
-        public ProfilesService() : this(CacheFactory.CreateCache()) { }
+        public ProfileService() : this(CacheFactory.CreateCache()) { }
 
-        public ProfilesService(ICache cache)
+        public ProfileService(ICache cache)
         {
             Cache = cache;
         }
@@ -28,7 +31,7 @@ namespace TeslaTizen.Services
         public async Task<IObservable<List<Profile>>> GetProfilesAsync()
         {
             await HydrateCache();
-            return ProfilesSubject.FirstAsync();
+            return ProfilesSubject.AsObservable();
         }
 
         public async Task UpsertProfileAsync(Profile profile)
@@ -68,6 +71,7 @@ namespace TeslaTizen.Services
 
         private void UpdateSubject()
         {
+            LogUtil.Debug("Updating profiles list");
             ProfilesSubject.OnNext(ProfilesCache);
         }
     }

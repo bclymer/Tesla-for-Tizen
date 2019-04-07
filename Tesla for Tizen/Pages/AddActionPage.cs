@@ -41,16 +41,10 @@ namespace TeslaTizen.Pages
             };
             listView.ItemTapped += async (sender, e) => {
                 var binder = (VehicleActionBinder)e.Item;
-                await binder.Action.CustomizeOrReturn(profile, Navigation);
+                await binder.Action.CustomizeOrReturn(profile, null, Navigation);
             };
 
-            Content = new StackLayout
-            {
-                Children =
-                {
-                    listView
-                }
-            };
+            Content = listView;
         }
 
         private class VehicleActionBinder

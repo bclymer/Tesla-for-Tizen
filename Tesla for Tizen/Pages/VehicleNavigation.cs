@@ -9,8 +9,11 @@ namespace TeslaTizen.Pages
 {
     public class VehicleNavigation: IndexPage
     {
-        public VehicleNavigation(TeslaService teslaService)
+        private IProfileService ProfileService { get; }
+
+        public VehicleNavigation(TeslaService teslaService, IProfileService profileService)
         {
+            ProfileService = profileService;
             NavigationPage.SetHasNavigationBar(this, false);
             // Need a way to determine if this is from cache or not to force a refresh
             var cachedVehicles = teslaService.GetVehicles();
@@ -26,12 +29,12 @@ namespace TeslaTizen.Pages
         private async void ShowVehicles(List<TeslaVehicle> vehicles)
         {
             Children.Clear();
-            var pages = vehicles.Select(v => new VehicleOverviewPage(v)).ToList();
+            var pages = vehicles.Select(v => new VehicleOverviewPage(v, ProfileService)).ToList();
             pages.ForEach(p => Children.Add(p));
             if (pages.Count == 1)
             {
                 // If there is only 1 vehicle, go straight into it
-                await pages.First().Navigation.PushAsync(new ProfilesListPage(vehicles.First()));
+                await pages.First().Navigation.PushAsync(new ProfilesListPage(vehicles.First(), ProfileService));
             }
         }
 

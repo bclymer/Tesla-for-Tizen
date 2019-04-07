@@ -90,9 +90,9 @@ namespace TeslaTizen.Models
             return "Unknown";
         }
 
-        public static async Task CustomizeOrReturn(this VehicleActionType action, Profile profile, INavigation navigation)
+        public static async Task CustomizeOrReturn(this VehicleActionType actionType, Profile profile, VehicleAction action, INavigation navigation)
         {
-            switch (action)
+            switch (actionType)
             {
                 case VehicleActionType.ClimateACStart:
                 case VehicleActionType.ClimateACStop:
@@ -113,12 +113,12 @@ namespace TeslaTizen.Models
                 case VehicleActionType.ValetModeSet:
                     profile.Actions.Add(new VehicleAction
                     {
-                        Type = action,
+                        Type = actionType,
                     });
                     await navigation.PopAsync();
                     break;
                 case VehicleActionType.ClimateSetTemps:
-                    await navigation.PushAsync(new ConfigureClimateSetTemps(profile, action));
+                    await navigation.PushAsync(new ConfigureClimateSetTemps(profile, actionType, action));
                     break;
                 case VehicleActionType.ClimateHeatedSeat:
                 case VehicleActionType.ClimateHeatedSteeringWheel:
@@ -126,12 +126,12 @@ namespace TeslaTizen.Models
                 case VehicleActionType.ControlsRearTrunk:
                 case VehicleActionType.ControlsSunRoof:
                 case VehicleActionType.SpeedLimitSet:
-                    await navigation.PushAsync(new ConfigureActionBasePage(profile, action));
+                    //await navigation.PushAsync(new ConfigureActionBasePage(profile, actionType, action));
                     break;
             }
         }
 
-        public static Task Execute(this VehicleAction action, TeslaAPIWrapper teslaApi)
+        public static Task Execute(this VehicleAction action, TeslaVehicle vehicle, ITeslaAPIWrapper teslaApi)
         {
             // TODO all of this.
             switch (action.Type)
