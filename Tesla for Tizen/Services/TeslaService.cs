@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TeslaTizen.Data;
 using TeslaTizen.Models;
 
@@ -10,8 +11,6 @@ namespace TeslaTizen.Services
         // tesla api
         private readonly ITeslaCache cache;
         private readonly ITeslaAPIWrapper teslaAPI;
-
-        public TeslaService() : this(new TeslaCache(), new TeslaAPIWrapper()) { }
 
         public TeslaService(ITeslaCache cache, ITeslaAPIWrapper teslaAPI)
         {
@@ -29,18 +28,18 @@ namespace TeslaTizen.Services
             return cache.GetAuthentication() == null;
         }
 
-        public void Login(string email, string password)
+        public async Task Login(string email, string password)
         {
-            var auth = teslaAPI.Login(email, password);
+            var auth = await teslaAPI.Login(email, password);
             cache.StoreAuthentication(auth);
         }
 
-        public List<TeslaVehicle> GetVehicles(bool forceRefresh = false)
+        public async Task<List<TeslaVehicle>> GetVehicles(bool forceRefresh = false)
         {
-            var vehicles = cache.GetVehicles();
+            var vehicles = await cache.GetVehicles();
             if (forceRefresh || vehicles == null)
             {
-                vehicles = teslaAPI.GetVehicles();
+                vehicles = await teslaAPI.GetVehicles();
                 cache.StoreVehicles(vehicles);
             }
             return vehicles ?? new List<TeslaVehicle>();

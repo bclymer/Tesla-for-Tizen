@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeslaTizen.Data;
 using TeslaTizen.Models;
 using TeslaTizen.Services;
 using TeslaTizen.Utils;
@@ -13,7 +14,7 @@ namespace TeslaTizen.Pages
 {
     public class ProfileActionPage: CirclePage
     {
-        public ProfileActionPage(Profile profile, TeslaVehicle teslaVehicle, IProfileService profileService)
+        public ProfileActionPage(Profile profile, TeslaVehicle teslaVehicle, IProfileService profileService, ITeslaAPIWrapper teslaAPIWrapper)
         {
             NavigationPage.SetHasNavigationBar(this, false);
             var listView = new CircleListView
@@ -26,7 +27,7 @@ namespace TeslaTizen.Pages
                 switch (e.Item)
                 {
                     case "Run":
-                        await Navigation.PushAsync(new ExecuteActionPage(profile, teslaVehicle));
+                        await Navigation.PushAsync(new ExecuteActionPage(profile, teslaVehicle, teslaAPIWrapper));
                         break;
                     case "Edit":
                         await Navigation.PushAsync(new EditProfilePage(profile, profileService));

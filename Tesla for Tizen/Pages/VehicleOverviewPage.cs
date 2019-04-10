@@ -1,4 +1,5 @@
-﻿using TeslaTizen.Models;
+﻿using TeslaTizen.Data;
+using TeslaTizen.Models;
 using TeslaTizen.Services;
 using Tizen.Wearable.CircularUI.Forms;
 using Xamarin.Forms;
@@ -7,9 +8,7 @@ namespace TeslaTizen.Pages
 {
     public class VehicleOverviewPage : CirclePage
     {
-        public IProfileService ProfileService { get; }
-
-        public VehicleOverviewPage(TeslaVehicle vehicle, IProfileService profileService)
+        public VehicleOverviewPage(TeslaVehicle vehicle, IProfileService profileService, ITeslaAPIWrapper teslaAPIWrapper)
         {
             Content = new StackLayout
             {
@@ -29,12 +28,11 @@ namespace TeslaTizen.Pages
                     {
                         Command = new Command(async () =>
                         {
-                            await Navigation.PushAsync(new ProfilesListPage(vehicle, ProfileService));
+                            await Navigation.PushAsync(new ProfilesListPage(vehicle, profileService, teslaAPIWrapper));
                         }),
                     }
                 }
             };
-            ProfileService = profileService;
         }
     }
 }

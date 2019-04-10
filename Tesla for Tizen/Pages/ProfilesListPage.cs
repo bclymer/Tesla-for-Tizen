@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using TeslaTizen.Utils;
 using System.Threading.Tasks;
+using TeslaTizen.Data;
 
 namespace TeslaTizen.Pages
 {
@@ -15,7 +16,7 @@ namespace TeslaTizen.Pages
     {
         private IDisposable Disposable;
 
-        public ProfilesListPage(TeslaVehicle vehicle, IProfileService profileService)
+        public ProfilesListPage(TeslaVehicle vehicle, IProfileService profileService, ITeslaAPIWrapper teslaAPIWrapper)
         {
             NavigationPage.SetHasNavigationBar(this, false);
             var listView = new CircleListView
@@ -44,7 +45,7 @@ namespace TeslaTizen.Pages
             };
             listView.ItemTapped += async (sender, e) => {
                 var binder = (ProfileBinder)e.Item;
-                await Navigation.PushAsync(new ProfileActionPage(binder.Profile, vehicle, profileService));
+                await Navigation.PushAsync(new ProfileActionPage(binder.Profile, vehicle, profileService, teslaAPIWrapper));
             };
 
             ActionButton = new ActionButtonItem

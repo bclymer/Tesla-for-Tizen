@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TeslaTizen.Data;
 using TeslaTizen.Pages;
 using TeslaTizen.Pages.ActionCustomization;
+using TeslaTizen.Utils;
 using Xamarin.Forms;
 
 namespace TeslaTizen.Models
@@ -18,31 +20,31 @@ namespace TeslaTizen.Models
 
     public enum VehicleActionType: int
     {
-        WakeUp = -1,
-        ClimateACStart = 0,
-        ClimateACStop = 1,
-        ClimateSetTemps = 2,
-        ClimateHeatedSeat = 3,
-        ClimateHeatedSteeringWheel = 4,
-        ChargingStart = 5,
-        ChargingStop = 6,
-        ChargingSetLimit = 7,
-        ChargingOpenPort = 8,
-        ChargingClosePort = 9,
-        ControlsDoorsLock = 10,
-        ControlsDoorsUnlock = 11,
-        ControlsFlashLights = 12,
-        ControlsHonkHorn = 13,
-        ControlsFrontTrunk = 14,
-        ControlsRearTrunk = 15,
-        ControlsSunRoof = 16,
-        RemoteStartDrive = 17,
-        SpeedLimitActivate = 18,
-        SpeedLimitClearPin = 19,
-        SpeedLimitDeactivate = 20,
-        SpeedLimitSet = 21,
-        ValetModeResetPin = 22,
-        ValetModeSet = 23,
+        WakeUp = 1,
+        ClimateACStart = 2,
+        ClimateACStop = 3,
+        ClimateSetTemps = 4,
+        ClimateHeatedSeat = 5,
+        ClimateHeatedSteeringWheel = 6,
+        ChargingStart = 7,
+        ChargingStop = 8,
+        ChargingSetLimit = 9,
+        ChargingOpenPort = 10,
+        ChargingClosePort = 11,
+        ControlsDoorsLock = 12,
+        ControlsDoorsUnlock = 13,
+        ControlsFlashLights = 14,
+        ControlsHonkHorn = 15,
+        ControlsFrontTrunk = 16,
+        ControlsRearTrunk = 17,
+        ControlsSunRoof = 18,
+        RemoteStartDrive = 19,
+        SpeedLimitActivate = 20,
+        SpeedLimitClearPin = 21,
+        SpeedLimitDeactivate = 22,
+        SpeedLimitSet = 23,
+        ValetModeResetPin = 24,
+        ValetModeSet = 25,
     }
 
     public static class VehicleActionUtils
@@ -131,45 +133,73 @@ namespace TeslaTizen.Models
             }
         }
 
-        public static Task Execute(this VehicleAction action, TeslaVehicle vehicle, ITeslaAPIWrapper teslaApi)
+        public static async Task Execute(this VehicleAction action, TeslaVehicle vehicle, ITeslaAPIWrapper teslaApi)
         {
-            // TODO all of this.
+            LogUtil.Debug($"Start Executing {action.Type.GetDescription()}");
+            // TODO remaining actions
             switch (action.Type)
             {
+                case VehicleActionType.WakeUp:
+                    await teslaApi.WakeUp(vehicle);
+                    break;
                 case VehicleActionType.ClimateACStart:
-                    
+                    await teslaApi.StartAutoConditioning(vehicle);
+                    break;
                 case VehicleActionType.ClimateACStop:
-
+                    await teslaApi.StopAutoConditioning(vehicle);
+                    break;
                 case VehicleActionType.ClimateSetTemps:
-
+                    var driverTemp = (double)action.Params["driver_temp"];
+                    var passengerTemp = (double)action.Params["passenger_temp"];
+                    await teslaApi.SetTemps(vehicle, driverTemp, passengerTemp);
+                    break;
                 case VehicleActionType.ClimateHeatedSeat:
-
+                    var heater = (int)action.Params["heater"];
+                    var level = (int)action.Params["level"];
+                    await teslaApi.SeatHeaterRequest(vehicle, heater, level);
+                    break;
                 case VehicleActionType.ClimateHeatedSteeringWheel:
-
+                    var on = (bool)action.Params["on"];
+                    await teslaApi.SteeringWheelHeaterRequest(vehicle, on);
+                    break;
                 case VehicleActionType.ChargingStart:
-
+                    await teslaApi.ChargeStart(vehicle);
+                    break;
                 case VehicleActionType.ChargingStop:
-
+                    await teslaApi.ChargeStop(vehicle);
+                    break;
                 case VehicleActionType.ChargingSetLimit:
-
+                    var percent = (int)action.Params["percent"];
+                    await teslaApi.SetChargeLimit(vehicle, percent);
+                    break;
                 case VehicleActionType.ChargingOpenPort:
-
+                    await teslaApi.ChargePortOpen(vehicle);
+                    break;
                 case VehicleActionType.ChargingClosePort:
-
+                    await teslaApi.ChargePortClose(vehicle);
+                    break;
                 case VehicleActionType.ControlsDoorsLock:
-
+                    await teslaApi.DoorLock(vehicle);
+                    break;
                 case VehicleActionType.ControlsDoorsUnlock:
-
+                    await teslaApi.DoorUnlock(vehicle);
+                    break;
                 case VehicleActionType.ControlsFlashLights:
-
+                    await teslaApi.FlashLights(vehicle);
+                    break;
                 case VehicleActionType.ControlsHonkHorn:
-
+                    await teslaApi.HonkHorn(vehicle);
+                    break;
                 case VehicleActionType.ControlsFrontTrunk:
-
+                    await teslaApi.ActuateTrunk(vehicle, "front");
+                    break;
                 case VehicleActionType.ControlsRearTrunk:
-
+                    await teslaApi.ActuateTrunk(vehicle, "rear");
+                    break;
                 case VehicleActionType.ControlsSunRoof:
-
+                    var state = (string)action.Params["state"];
+                    await teslaApi.SunRoofControl(vehicle, state);
+                    break;
                 case VehicleActionType.RemoteStartDrive:
 
                 case VehicleActionType.SpeedLimitActivate:
@@ -183,9 +213,10 @@ namespace TeslaTizen.Models
                 case VehicleActionType.ValetModeResetPin:
 
                 case VehicleActionType.ValetModeSet:
+                    Thread.Sleep(500);
                     break;
             }
-            return Task.CompletedTask;
+            LogUtil.Debug($"Finished Executing {action.Type.GetDescription()}");
         }
     }
 }

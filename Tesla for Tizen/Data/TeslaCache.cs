@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TeslaTizen.Models;
 using TeslaTizen.Utils;
 
@@ -33,22 +34,22 @@ namespace TeslaTizen.Data
             Cache.StoreDataAsync(vehicles, VehiclesKey);
         }
 
-        public List<TeslaVehicle> GetVehicles()
+        public async Task<List<TeslaVehicle>> GetVehicles()
         {
-            return new List<TeslaVehicle>
-            {
-                new TeslaVehicle
-                {
-                    Name = "Appa",
-                    Id = 12345,
-                },
-                new TeslaVehicle
-                {
-                    Name = "Jenny",
-                    Id = 54321,
-                }
-            };
-            //return Cache.GetData<List<TeslaVehicle>>(VehiclesKey);
+            //return new List<TeslaVehicle>
+            //{
+            //    new TeslaVehicle
+            //    {
+            //        Name = "Appa",
+            //        Id = 12345,
+            //    },
+            //    new TeslaVehicle
+            //    {
+            //        Name = "Jenny",
+            //        Id = 54321,
+            //    }
+            //};
+            return await Cache.GetDataAsync<List<TeslaVehicle>>(VehiclesKey);
         }
 
         private TeslaAuthentication FakeAuth()

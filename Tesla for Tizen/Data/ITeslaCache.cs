@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TeslaTizen.Models;
 
 namespace TeslaTizen.Data
@@ -8,6 +9,6 @@ namespace TeslaTizen.Data
         void StoreAuthentication(TeslaAuthentication auth);
         TeslaAuthentication GetAuthentication();
         void StoreVehicles(List<TeslaVehicle> vehicles);
-        List<TeslaVehicle> GetVehicles();
+        Task<List<TeslaVehicle>> GetVehicles();
     }
 }

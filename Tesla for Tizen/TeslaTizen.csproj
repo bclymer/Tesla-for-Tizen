@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>tizen50</TargetFramework>
+    <TargetFramework>tizen40</TargetFramework>
     <AssemblyName>Tesla_for_Tizen</AssemblyName>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
@@ -29,13 +29,16 @@
   <ItemGroup>
     <PackageReference Include="LiteCache.Tizen" Version="0.2.0" />
     <PackageReference Include="System.Reactive" Version="4.1.3" />
-    <PackageReference Include="Tesla.NET" Version="0.6.2" />
     <PackageReference Include="Tizen.NET" Version="5.0.0.14562">
       <ExcludeAssets>Runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Tizen.NET.Sdk" Version="1.0.1" />
     <PackageReference Include="Tizen.Wearable.CircularUI" Version="1.0.0" />
     <PackageReference Include="Xamarin.Forms" Version="3.2.0.871581" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GitHub\tesla-net\src\Tesla.NET\Tesla.NET.csproj" />
   </ItemGroup>
 
 </Project>

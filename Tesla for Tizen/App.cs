@@ -12,20 +12,23 @@ namespace TeslaTizen
 {
     public class App : Application
     {
-        private readonly TeslaService teslaService = new TeslaService();
+        // TODO Pretty sure this can just be a new instance.
         private readonly IProfileService profileService = ProfileService.Instance;
+        private readonly ITeslaAPIWrapper teslaAPIWrapper = new TeslaAPIWrapper();
+        private TeslaService TeslaService => new TeslaService(new TeslaCache(), teslaAPIWrapper);
 
         public App()
         {
             CacheFactory.CreateCache().Init();
             LogUtil.Info($"IsFreshInstall={CacheFactory.CreateCache().IsFreshInstall()}");
-            if (teslaService.RequiresLogin())
+            var service = TeslaService;
+            if (service.RequiresLogin())
             {
-                MainPage = new LoginPage(teslaService);
+                MainPage = new LoginPage(service);
             }
             else
             {
-                MainPage = new NavigationPage(new VehicleNavigation(teslaService, profileService));
+                MainPage = new NavigationPage(new VehicleNavigation(service, profileService, teslaAPIWrapper));
             }
         }
 
