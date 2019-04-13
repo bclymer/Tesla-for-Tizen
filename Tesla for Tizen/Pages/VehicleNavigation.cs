@@ -49,6 +49,8 @@ namespace TeslaTizen.Pages
             {
                 // If there is only 1 vehicle, go straight into it
                 await pages.First().Navigation.PushAsync(new ProfilesListPage(vehicles.First(), ProfileService, TeslaAPIWrapper));
+                // remove this page.
+                Navigation.RemovePage(Navigation.NavigationStack[0]);
             }
         }
 

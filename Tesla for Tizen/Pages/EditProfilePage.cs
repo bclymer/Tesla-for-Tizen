@@ -16,6 +16,8 @@ namespace TeslaTizen.Pages
         private readonly IProfileService ProfileService;
         private readonly Profile Profile;
 
+        private IDisposable Disposable;
+
         public EditProfilePage(IProfileService profileService) : this(Profile.Create(), profileService) { }
 
         public EditProfilePage(Profile profile, IProfileService profileService)
@@ -23,13 +25,15 @@ namespace TeslaTizen.Pages
             Profile = profile;
             ProfileService = profileService;
 
+            // Insert immediately so we can monitor it's actions.
+            profileService.UpsertProfileAsync(Profile);
+
             NavigationPage.SetHasNavigationBar(this, false);
             
             var listView = new CircleListView
             {
                 Header = UIUtil.CreateHeaderLabel(profile.Name),
                 // TODO this is not auto-updating
-                ItemsSource = profile.Actions,
                 ItemTemplate = new DataTemplate(() =>
                 {
                     Label nameLabel = new Label
@@ -54,18 +58,28 @@ namespace TeslaTizen.Pages
             listView.ItemTapped += async (sender, e) =>
             {
                 var binder = (VehicleAction)e.Item;
-                await binder.Type.CustomizeOrReturn(profile, binder, Navigation);
+                await binder.Type.CustomizeOrReturn(profile, binder, Navigation, profileService);
             };
             // TODO tapping cell should have popup to delete it.
 
             Content = listView;
+
+            Disposable = ProfileService
+                .GetProfile(Profile.Id)
+                .Subscribe(updatedProfile => {
+                    LogUtil.Debug("New actions list count = " + updatedProfile.Actions.Count);
+                    // It wasn't refreshing without this.
+                    listView.ItemsSource = null;
+                    listView.ItemsSource = updatedProfile.Actions;
+                    listView.ScrollTo(updatedProfile.Actions.Last(), ScrollToPosition.Center, true);
+                });
 
             ActionButton = new ActionButtonItem
             {
                 Text = "+",
                 Command = new Command(async () =>
                 {
-                    await Navigation.PushAsync(new AddActionPage(profile));
+                    await Navigation.PushAsync(new AddActionPage(profile, profileService));
                 })
             };
         }
@@ -74,6 +88,12 @@ namespace TeslaTizen.Pages
         {
             base.OnDisappearing();
             ProfileService.UpsertProfileAsync(Profile);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            Disposable?.Dispose();
+            return base.OnBackButtonPressed();
         }
     }
 }

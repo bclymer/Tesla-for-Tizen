@@ -59,21 +59,17 @@ namespace TeslaTizen.Pages
 
             Content = listView;
 
-            Setup(listView, profileService).Wait();
-        }
-
-        private async Task Setup(ListView listView, IProfileService profileService)
-        {
-            var profilesObservable = await profileService.GetProfilesAsync();
-            Disposable = profilesObservable.Subscribe(updatedList => {
-                LogUtil.Debug("New list count = " + updatedList.Count);
-                listView.ItemsSource = updatedList.Select(p => new ProfileBinder(p));
-            });
+            Disposable = profileService
+                .GetProfiles()
+                .Subscribe(updatedList => {
+                    LogUtil.Debug("New profiles list count = " + updatedList.Count);
+                    listView.ItemsSource = updatedList.Select(p => new ProfileBinder(p));
+                });
         }
 
         protected override bool OnBackButtonPressed()
         {
-            Disposable.Dispose();
+            Disposable?.Dispose();
             return base.OnBackButtonPressed();
         }
 

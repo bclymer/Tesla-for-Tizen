@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeslaTizen.Models;
+using TeslaTizen.Services;
 using Xamarin.Forms;
 
 namespace TeslaTizen.Pages.ActionCustomization
 {
     public class ConfigureClimateSetTemps : ConfigureActionBasePage
     {
-        public ConfigureClimateSetTemps(Profile profile, VehicleActionType actionType, VehicleAction action) : base(profile, actionType, action) { }
+        public ConfigureClimateSetTemps(Profile profile, VehicleActionType actionType, VehicleAction action, IProfileService profileService) : base(profile, actionType, action, profileService) { }
 
         private Entry DriverTemp { get; set; }
         private Entry PassengerTemp { get; set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeslaTizen.Models;
+using TeslaTizen.Services;
 using Tizen.Wearable.CircularUI.Forms;
 using Xamarin.Forms;
 
@@ -11,7 +12,7 @@ namespace TeslaTizen.Pages
 {
     public class AddActionPage: CirclePage
     {
-        public AddActionPage(Profile profile)
+        public AddActionPage(Profile profile, IProfileService profileService)
         {
             NavigationPage.SetHasNavigationBar(this, false);
 
@@ -41,7 +42,7 @@ namespace TeslaTizen.Pages
             };
             listView.ItemTapped += async (sender, e) => {
                 var binder = (VehicleActionBinder)e.Item;
-                await binder.Action.CustomizeOrReturn(profile, null, Navigation);
+                await binder.Action.CustomizeOrReturn(profile, null, Navigation, profileService);
             };
 
             Content = listView;

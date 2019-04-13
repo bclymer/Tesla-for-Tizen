@@ -7,7 +7,8 @@ namespace TeslaTizen.Services
 {
     public interface IProfileService
     {
-        Task<IObservable<List<Profile>>> GetProfilesAsync();
+        IObservable<List<Profile>> GetProfiles();
+        IObservable<Profile> GetProfile(string profileId);
         Task DeleteProfileAsync(Profile profile);
         Task UpsertProfileAsync(Profile profile);
     }

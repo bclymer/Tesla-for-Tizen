@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TeslaTizen.Data;
 using TeslaTizen.Pages;
 using TeslaTizen.Pages.ActionCustomization;
+using TeslaTizen.Services;
 using TeslaTizen.Utils;
 using Xamarin.Forms;
 
@@ -92,7 +93,7 @@ namespace TeslaTizen.Models
             return "Unknown";
         }
 
-        public static async Task CustomizeOrReturn(this VehicleActionType actionType, Profile profile, VehicleAction action, INavigation navigation)
+        public static async Task CustomizeOrReturn(this VehicleActionType actionType, Profile profile, VehicleAction action, INavigation navigation, IProfileService profileService)
         {
             switch (actionType)
             {
@@ -117,10 +118,11 @@ namespace TeslaTizen.Models
                     {
                         Type = actionType,
                     });
+                    await profileService.UpsertProfileAsync(profile);
                     await navigation.PopAsync();
                     break;
                 case VehicleActionType.ClimateSetTemps:
-                    await navigation.PushAsync(new ConfigureClimateSetTemps(profile, actionType, action));
+                    await navigation.PushAsync(new ConfigureClimateSetTemps(profile, actionType, action, profileService));
                     break;
                 case VehicleActionType.ClimateHeatedSeat:
                 case VehicleActionType.ClimateHeatedSteeringWheel:

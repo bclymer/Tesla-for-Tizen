@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using TeslaTizen.Services;
 using TeslaTizen.Utils;
 using Tizen.Wearable.CircularUI.Forms;
@@ -35,10 +36,10 @@ namespace TeslaTizen.Pages
             });
         }
 
-        private void Login()
+        private async Task Login()
         {
             var developer = LocalFileParser.GetDeveloper();
-            teslaService.Login(developer.Email, developer.Password);
+            await teslaService.Login(developer.Email, developer.Password);
         }
     }
 }

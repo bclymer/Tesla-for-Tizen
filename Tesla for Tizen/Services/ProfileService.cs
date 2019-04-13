@@ -26,17 +26,26 @@ namespace TeslaTizen.Services
         public ProfileService(ICache cache)
         {
             Cache = cache;
+            HydrateCache().Wait();
         }
 
-        public async Task<IObservable<List<Profile>>> GetProfilesAsync()
+        public IObservable<List<Profile>> GetProfiles()
         {
-            await HydrateCache();
             return ProfilesSubject.AsObservable();
+        }
+
+        public IObservable<Profile> GetProfile(string profileId)
+        {
+            return ProfilesSubject
+                .AsObservable()
+                .Select(l => l
+                    .Where(p => p.Id == profileId)
+                    .FirstOrDefault()
+                );
         }
 
         public async Task UpsertProfileAsync(Profile profile)
         {
-            await HydrateCache();
             var existingProfile = ProfilesCache.FirstOrDefault(p => p.Id == profile.Id);
             if (existingProfile != null)
             {
@@ -53,7 +62,6 @@ namespace TeslaTizen.Services
 
         public async Task DeleteProfileAsync(Profile profile)
         {
-            await HydrateCache();
             var existingProfile = ProfilesCache.FirstOrDefault(p => p.Id == profile.Id);
             ProfilesCache.Remove(existingProfile);
             await Cache.StoreDataAsync(new List<Profile>(ProfilesCache.ToList()), ProfilesKey);
