@@ -9,13 +9,13 @@ namespace TeslaTizen.Services
     {
         // cache provider
         // tesla api
-        private readonly ITeslaCache cache;
-        private readonly ITeslaAPIWrapper teslaAPI;
+        private readonly ITeslaCache Cache;
+        private readonly ITeslaAPIWrapper TeslaAPI;
 
         public TeslaService(ITeslaCache cache, ITeslaAPIWrapper teslaAPI)
         {
-            this.cache = cache;
-            this.teslaAPI = teslaAPI;
+            Cache = cache;
+            TeslaAPI = teslaAPI;
             var cachedAuth = cache.GetAuthentication();
             if (cachedAuth != null)
             {
@@ -25,22 +25,23 @@ namespace TeslaTizen.Services
 
         public bool RequiresLogin()
         {
-            return cache.GetAuthentication() == null;
+            return Cache.GetAuthentication() == null;
         }
 
         public async Task Login(string email, string password)
         {
-            var auth = await teslaAPI.Login(email, password);
-            cache.StoreAuthentication(auth);
+            var auth = await TeslaAPI.Login(email, password);
+            TeslaAPI.SetBearerToken(auth.AccessToken);
+            Cache.StoreAuthentication(auth);
         }
 
         public async Task<List<TeslaVehicle>> GetVehicles(bool forceRefresh = false)
         {
-            var vehicles = await cache.GetVehicles();
+            var vehicles = await Cache.GetVehicles();
             if (forceRefresh || vehicles == null)
             {
-                vehicles = await teslaAPI.GetVehicles();
-                cache.StoreVehicles(vehicles);
+                vehicles = await TeslaAPI.GetVehicles();
+                Cache.StoreVehicles(vehicles);
             }
             return vehicles ?? new List<TeslaVehicle>();
         }

@@ -15,8 +15,6 @@ namespace TeslaTizen.Services
     {
         private const string ProfilesKey = "Profiles";
 
-        public static readonly ProfileService Instance = new ProfileService();
-
         private readonly ICache Cache;
         private BehaviorSubject<List<Profile>> ProfilesSubject;
         private List<Profile> ProfilesCache;

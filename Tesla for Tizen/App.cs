@@ -8,12 +8,16 @@ using TeslaTizen.Services;
 using TeslaTizen.Utils;
 using Xamarin.Forms;
 
+// TODO - Refresh token every ~30 days.
+// TODO - Create widget for quick launch of profiles.
+// TODO - Redesign the car list screen to show your car's details
+// TODO - Handle errors basically everywhere there is an API request.
+
 namespace TeslaTizen
 {
     public class App : Application
     {
-        // TODO Pretty sure this can just be a new instance.
-        private readonly IProfileService profileService = ProfileService.Instance;
+        private readonly IProfileService profileService = new ProfileService();
         private readonly ITeslaAPIWrapper teslaAPIWrapper = new TeslaAPIWrapper();
         private TeslaService TeslaService => new TeslaService(new TeslaCache(), teslaAPIWrapper);
 
@@ -24,7 +28,7 @@ namespace TeslaTizen
             var service = TeslaService;
             if (service.RequiresLogin())
             {
-                MainPage = new LoginPage(service);
+                MainPage = new LoginPage(service, profileService, teslaAPIWrapper);
             }
             else
             {

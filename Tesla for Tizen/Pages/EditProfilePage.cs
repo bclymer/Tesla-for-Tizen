@@ -33,7 +33,6 @@ namespace TeslaTizen.Pages
             var listView = new CircleListView
             {
                 Header = UIUtil.CreateHeaderLabel(profile.Name),
-                // TODO this is not auto-updating
                 ItemTemplate = new DataTemplate(() =>
                 {
                     Label nameLabel = new Label
@@ -61,6 +60,8 @@ namespace TeslaTizen.Pages
                 await binder.Type.CustomizeOrReturn(profile, binder, Navigation, profileService);
             };
             // TODO tapping cell should have popup to delete it.
+
+            // Need an option to rename the profile
 
             Content = listView;
 
