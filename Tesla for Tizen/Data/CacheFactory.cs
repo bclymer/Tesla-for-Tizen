@@ -10,7 +10,7 @@ namespace TeslaTizen.Data
     {
         public static ICache CreateCache()
         {
-            return new ApplicationCache();
+            return new PreferenceCache();
         }
     }
 }

@@ -57,9 +57,10 @@ namespace TeslaTizen.Pages
             listView.ItemTapped += async (sender, e) =>
             {
                 var binder = (VehicleAction)e.Item;
-                await binder.Type.CustomizeOrReturn(profile, binder, Navigation, profileService);
+                await Navigation.PushModalAsync(new DeleteActionPage(profile, binder, profileService));
+                // TODO should also be able to edit actions that are configurable.
+                //await binder.Type.CustomizeOrReturn(profile, binder, Navigation, profileService);
             };
-            // TODO tapping cell should have popup to delete it.
 
             Content = listView;
 
