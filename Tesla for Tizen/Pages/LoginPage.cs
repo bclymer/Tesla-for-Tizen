@@ -15,10 +15,9 @@ namespace TeslaTizen.Pages
         public readonly IProfileService ProfileService;
         public readonly ITeslaAPIWrapper TeslaAPIWrapper;
 
-        private Entry Email { get; set; }
-        private Entry Password { get; set; }
-        private Button LoginButton { get; set; }
-        
+        private readonly Entry Email;
+        private readonly Entry Password;
+        private readonly Button LoginButton;
 
         public LoginPage(TeslaService teslaService, IProfileService profileService, ITeslaAPIWrapper teslaAPIWrapper)
         {
@@ -44,6 +43,16 @@ namespace TeslaTizen.Pages
                 IsEnabled = false,
             };
             LoginButton.Clicked += Button_Clicked;
+
+            Content = new StackLayout
+            {
+                Children =
+                {
+                    Email,
+                    Password,
+                    LoginButton,
+                },
+            };
         }
 
         // TODO need to actually login and store the result.

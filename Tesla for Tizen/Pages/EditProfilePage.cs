@@ -61,8 +61,6 @@ namespace TeslaTizen.Pages
             };
             // TODO tapping cell should have popup to delete it.
 
-            // Need an option to rename the profile
-
             Content = listView;
 
             Disposable = ProfileService
@@ -73,7 +71,18 @@ namespace TeslaTizen.Pages
                     listView.ItemsSource = null;
                     listView.ItemsSource = updatedProfile.Actions;
                     listView.ScrollTo(updatedProfile.Actions.Last(), ScrollToPosition.Center, true);
+                    listView.Header = UIUtil.CreateHeaderLabel(updatedProfile.Name);
                 });
+
+            ToolbarItems.Add(new CircleToolbarItem
+            {
+                Text = "Rename",
+                Icon = new FileImageSource(),
+                Command = new Command(async () =>
+                {
+                    await Navigation.PushModalAsync(new RenameProfilePage(profile, profileService));
+                })
+            });
 
             ActionButton = new ActionButtonItem
             {
