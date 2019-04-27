@@ -1,16 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.bclymer.Tesla_for_Tizen" version="1.0.0" api-version="4" xmlns="http://tizen.org/ns/packages">
-    <profile name="wearable" />
-    <ui-application appid="com.bclymer.TeslaTizen" exec="Tesla_for_Tizen.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
-        <label>Tesla for Tizen</label>
-        <icon>Tesla_for_Tizen.png</icon>
-        <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
-        <splash-screens />
-    </ui-application>
-    <shortcut-list />
-    <privileges>
-        <privilege>http://tizen.org/privilege/internet</privilege>
-        <privilege>http://tizen.org/privilege/http</privilege>
-    </privileges>
-    <provides-appdefined-privileges />
+  <author email="crdnilfan@gmail.com">Brian Clymer</author>
+  <profile name="wearable" />
+  <ui-application appid="com.bclymer.TeslaTizen.Main" exec="Tesla_for_Tizen.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
+    <label>TeslaForTizen</label>
+    <icon>Tesla_for_Tizen.png</icon>
+    <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
+    <background-category value="background-network" />
+    <splash-screens />
+  </ui-application>
+  <widget-application appid="com.bclymer.TeslaTizen.Widget" exec="Tesla_for_Tizen.dll" type="dotnet" multiple="false" taskmanage="true" nodisplay="false" launch_mode="single">
+    <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
+    <label>TeslaForTizen</label>
+    <icon>Tesla_for_Tizen.png</icon>
+    <support-size preview="sample-widget-preview.png">2x2</support-size>
+  </widget-application>
+  <shortcut-list />
+  <privileges>
+    <privilege>http://tizen.org/privilege/internet</privilege>
+    <privilege>http://tizen.org/privilege/widget.viewer</privilege>
+  </privileges>
+  <provides-appdefined-privileges />
 </manifest>
