@@ -35,7 +35,6 @@ namespace TeslaTizen.Pages
                         Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
                         break;
                     case "Delete":
-                        // TODO Confirm delete
                         await profileService.DeleteProfileAsync(profile);
                         await Navigation.PopAsync();
                         break;

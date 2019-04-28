@@ -57,7 +57,7 @@ namespace TeslaTizen.Models
 
         public static bool IsRequired(this VehicleActionType action)
         {
-            return action != VehicleActionType.WakeUp;
+            return action == VehicleActionType.WakeUp;
         }
 
         public static bool IsCustomizable(this VehicleActionType action)
