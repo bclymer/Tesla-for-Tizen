@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeslaTizen", "Tesla for Tiz
 		{3E2A396C-53B2-4E59-91AB-3F7CF2EC4B9D} = {3E2A396C-53B2-4E59-91AB-3F7CF2EC4B9D}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tesla.NET", "..\..\..\GitHub\tesla-net\src\Tesla.NET\Tesla.NET.csproj", "{3E2A396C-53B2-4E59-91AB-3F7CF2EC4B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tesla.NET", "..\tesla-net\src\Tesla.NET\Tesla.NET.csproj", "{3E2A396C-53B2-4E59-91AB-3F7CF2EC4B9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
