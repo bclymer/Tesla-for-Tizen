@@ -18,7 +18,7 @@ namespace TeslaTizen.Pages
 
             var listView = new CircleListView
             {
-                ItemsSource = VehicleActionUtils.GetVisibleActions().Select(a => new VehicleActionBinder(a)),
+                ItemsSource = VehicleActionUtils.GetUserActions().Select(a => new VehicleActionBinder(a)),
                 ItemTemplate = new DataTemplate(() =>
                 {
                     Label nameLabel = new Label

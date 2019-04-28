@@ -50,14 +50,31 @@ namespace TeslaTizen.Models
 
     public static class VehicleActionUtils
     {
-        public static IEnumerable<VehicleActionType> GetVisibleActions()
+        public static IEnumerable<VehicleActionType> GetUserActions()
         {
-            return Enum.GetValues(typeof(VehicleActionType)).Cast<VehicleActionType>().Where(a => a != VehicleActionType.WakeUp);
+            return Enum.GetValues(typeof(VehicleActionType)).Cast<VehicleActionType>().Where(a => !a.IsRequired());
         }
 
-        public static bool IsVisible(this VehicleActionType action)
+        public static bool IsRequired(this VehicleActionType action)
         {
             return action != VehicleActionType.WakeUp;
+        }
+
+        public static bool IsCustomizable(this VehicleActionType action)
+        {
+            switch (action)
+            {
+                case VehicleActionType.ClimateSetTemps:
+                case VehicleActionType.ClimateHeatedSeat:
+                case VehicleActionType.ClimateHeatedSteeringWheel:
+                case VehicleActionType.ChargingSetLimit:
+                case VehicleActionType.ControlsRearTrunk:
+                case VehicleActionType.ControlsSunRoof:
+                case VehicleActionType.SpeedLimitSet:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public static string GetDescription(this VehicleActionType action)

@@ -57,9 +57,12 @@ namespace TeslaTizen.Pages
             listView.ItemTapped += async (sender, e) =>
             {
                 var binder = (VehicleAction)e.Item;
-                await Navigation.PushModalAsync(new DeleteActionPage(profile, binder, profileService));
-                // TODO should also be able to edit actions that are configurable.
-                //await binder.Type.CustomizeOrReturn(profile, binder, Navigation, profileService);
+                if (binder.Type.IsRequired())
+                {
+                    // if the action is required you can't edit or delete it.
+                    return;
+                }
+                await Navigation.PushAsync(new EditActionPage(profile, binder, profileService));
             };
 
             Content = listView;

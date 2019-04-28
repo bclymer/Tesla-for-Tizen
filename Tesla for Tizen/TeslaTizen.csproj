@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GitHub\tesla-net\src\Tesla.NET\Tesla.NET.csproj" />
+    <ProjectReference Include="..\..\tesla-net\src\Tesla.NET\Tesla.NET.csproj" />
   </ItemGroup>
 
 </Project>
